@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graf</title>
+</head>
+<body>
+    <canvas id = "platno1" width="800" height="100" style="border: 1px dashed black"></canvas>
+
+    <script>
+        "use strict";
+        let can1, platno1;
+        can1 = document.getElementById("platno1"); //pridobimo element platna iz html dokumenta
+        platno1 = can1.getContext("2d"); //pridobimmo 2d kontekst za risanje na platnu, od tu dalje za risanje uporabimo spremenljivko "platno1"
+
+
+        let x = new Array();
+        let y = new Array();
+
+        let maxGrafX = can1.width;
+        let maxGrafy = can1.height;
+        let časovnik;
+
+        //inicializacija tabele x
+
+        for(let i = 0;i<can1.width; i++){
+            x[i] =i;
+        }
+
+        platno1.strokeStyle="#FF0000"; //nastavitev rdeče barve črte
+        
+
+        function zanka(){
+            if(y.length == maxGrafX + 1){ //če je platno veliko 10*10, imamo 11*11 točk
+                y.splice(0, 1); //odstranimo prvi element tabele y, da se graf premika v levo
+                y.push(Math.random()*100); //dodamo nov element na konec tabele y, da se graf premika v desno
+            }
+            else //če tabela y ni polna, dodajamo naključne vrednosti
+            {
+                y.push(Math.random()*100);//dodamo nov element na konec tabele y, da se graf premika v desno
+            }
+            
+            platno1.clearRect(0, 0, can1.width, can1.height);//počistimo platno, da lahko narišemo nov graf
+
+            platno1.beginPath();
+
+            for(let i = 0; i<y.length; i++){
+                platno1.lineTo(x[i], y[i]);
+            }
+
+            platno1.stroke();
+            časovnik = setTimeout(zanka, 10);
+        }
+        zanka();
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Primer z grafom
+    <br>
+    <canvas id="platno-1" width="800" height="100" style="border:1px dashed #099999"></canvas>
+    <script>
+        "use strict"; //omogoča strožjo sintakso in boljše preverjanje napak, vse spremenljivke morajo biti deklarirane
+
+        let can1,platno1; //deklaracija spremenljivk za platno
+        //vrstici za delo s platnom, ki omogočata risanje na platno
+        //"boilerplate" koda za platno ("koda deklaracijske ploščice bojlerja")
+        can1=document.getElementById("platno-1"); //dostop do elementa platna preko ID-ja iz HTML dokumenta
+        platno1=can1.getContext("2d"); //dostop do 2D konteksta platna, ki omogoča risanje na platno, od tu dalje za risanje uporabimo spremenljivko "platno1"
+        
+        let x = new Array();
+        let y = new Array();
+
+        x[0] = 10; y[0] = 70;
+        x[1] = 110; y[1] = 35;
+        x[2] = 210; y[2] = 50;
+        x[3] = 310; y[3] = 25;
+        x[4] = 410; y[4] = 45;
+        x[5] = 510; y[5] = 15;
+
+
+        platno1.strokeStyle="#FF0000"; //nastavitev rdeče barve črte
+        platno1.beginPath(); //začetek nove poti za risanje
+
+        for (let i=0; i<y.length; i++) {
+            platno1.lineTo(x[i],y[i]); //dodajanje točk na pot, ki jo bomo risali, vsaka točka je definirana z koordinatama x in y
+        }
+        
+        platno1.stroke(); //izris poti, ki smo jo definirali z lineTo metodami, na platno
+    </script>
+</body>
+</html>
+    </script>
+</body>
+</html>

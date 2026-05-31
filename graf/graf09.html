@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graf</title>
+</head>
+<body>
+Primer z grafom
+<br>
+<canvas id="platno-1" width="800" height="100" style="border: 1px dashed #099999"></canvas>    
+<script>
+"use strict"; // strict mode omogoča boljše odkrivanje napak, vse spremenljivke morajo biti deklarirane
+
+let časovnik; // spremenljivka za časovnik, za posodabljanje grafa oz. izris
+
+let graf1; // spremenljivka, ki predstavlja prvi graf (objekt razreda Graf)
+
+class Graf{
+    constructor(idPlatna){
+        // vrstici za delo s platnom, t.j. "canvas-om"
+        // "boileplate" koda za platno ("koda deklaracijske ploščice bojlerja")
+        this.can1 = document.getElementById(idPlatna); // pridobimo element platna iz HTML dokumenta
+        this.platno1 = this.can1.getContext("2d"); // pridobimo 2D kontekst za risanje na platnu, od tu dalje za risanje uporabimo spremenljivko "platno1"
+        this.platno1.strokeStyle = "#FF0000"; // nastavimo rdečo barvo črte RRGGBB
+        this.x = new Array(); // deklariramo novo tabelo x (polje oz. Array), lathko bi tudi zapisali: let x = [];
+        this.y = new Array(); // deklariramo novo tabelo y (polje oz. Array), lathko bi tudi zapisali: let y = [];
+        this.maxGrafX = this.can1.width; // maksimalna vrednost po abscisi
+        this.maxGrafY = this.can1.height; // maksimalna vrednost po ordinati
+        // inicializacija tabele x
+        for(let i=0; i<this.maxGrafX; i++){
+            this.x[i] = i; // za x zapišemo 0, 1, 2, ... t.j. vrednosti i do širine platna (800)
+        }
+    }
+    // funkcija najprej polni tabelo y z vrednostmi, ki jih posredujemo v argumentu
+    // ko je tabela y polna, prvo vrednost brišemo in na koncu tabele y novo vrednost dodamo
+    dodajVrednostAliBrišiIndodaj(yVrednost){
+        if(this.y.length == this.maxGrafX + 1){ // če je platno veliko 10x10 imamo 11x11 točk, zaradi tega +1
+            this.y.splice(0, 1); // na mestu 0 v tabeli y brišemo en (1) element
+            this.y.push(yVrednost); // na konec tabele y dodamo novo naključno vrednost med 0 in 100
+        }
+        else // če tabela y še ni polna, dodajamo naključne vrednosti
+        {
+            this.y.push(yVrednost); // na konec tabele y dodamo novo naključno vrednost med 0 in 100
+        }
+    }
+    izriši(yVrednost){
+        this.dodajVrednostAliBrišiIndodaj(yVrednost); // kličemo funkcijo, ki doda vrednost (ali briše in doda)
+        this.platno1.clearRect(0, 0, this.can1.width, this.can1.height); // počistimo platno (x, y, širina, višina)
+
+        this.platno1.beginPath(); // začetek izrisa
+
+        for(let i=0; i<this.y.length; i++){
+            this.platno1.lineTo(this.x[i], this.y[i]); // vrednosti prikažemo na platnu (naključne med 0 in 100)
+        }
+
+        this.platno1.stroke(); // za prikaz črte na platnu
+    }
+}
+
+function zanka(){
+    graf1.izriši(Math.random()*100); // izrišemo vrednost na graf1
+    časovnik = setTimeout(zanka, 10); // nastavimo časovnik, da se funkcija zanka ponovi po 10 ms
+}
+
+graf1 = new Graf("platno-1"); // ustvarimo graf1 kot objekt razreda Graf, ki deluje na platnu z id-jem "platno-1"
+
+zanka(); // pokličemo funkcijo zanka, da se prične izris grafa in posodabljanje grafa vsakih 10 ms
+
+</script>
+
+</body>
+</html>

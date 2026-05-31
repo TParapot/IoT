@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Primer z grafom
+    <br>
+    <canvas id="platno-1" width="800" height="100" style="border:1px dashed #099999"></canvas>
+    <script>
+        "use strict"; //omogoča strožjo sintakso in boljše preverjanje napak, vse spremenljivke morajo biti deklarirane
+
+        let can1,platno1; //deklaracija spremenljivk za platno
+        //vrstici za delo s platnom, ki omogočata risanje na platno
+        //"boilerplate" koda za platno ("koda deklaracijske ploščice bojlerja")
+        can1=document.getElementById("platno-1"); //dostop do elementa platna preko ID-ja iz HTML dokumenta
+        platno1=can1.getContext("2d"); //dostop do 2D konteksta platna, ki omogoča risanje na platno, od tu dalje za risanje uporabimo spremenljivko "platno1"
+        
+        let x = new Array();
+        let y = new Array();
+
+        //generiramo naključne podatke za graf, 100 točk z naključnimi vrednostmi med 0 in 100
+        for (let i=0; i<can1.width; i++) {
+            x[i] = i; // za x zapišemo 0,1,2 ...do širine platna
+            y[i] = Math.floor(Math.random() * 101); // v tabelo (Array) y zapišemo naključne vrednosti med 0 in 100, Math.random() generira naključno število med 0 in 1, pomnožimo ga s 101, da dobimo število med 0 in 100, in uporabimo Math.floor() za zaokroževanje navzdol na najbližje celo število  
+        }
+
+        platno1.strokeStyle="#FF0000"; //nastavitev rdeče barve črte
+        platno1.beginPath(); //začetek nove poti za risanje
+
+        for (let i=0; i<y.length; i++) {
+            platno1.lineTo(x[i],y[i]); //vrednosti prikađemo na platnu (naključne med 0 in 100)
+        }
+        
+        platno1.stroke(); //izris poti, ki smo jo definirali z lineTo metodami, na platno
+    </script>
+</body>
+</html>
+    </script>
+</body>
+</html>

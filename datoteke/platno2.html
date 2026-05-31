@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platno</title>
+</head>
+<body>
+    
+    <canvas id="platno-1" width="200" height="100" style="border:1px dashed #099999;">
+    </canvas>
+  
+    <script>
+        // "boilerplate" koda za delo s platnom (canvas) v JavaScriptu
+        const plat1 = document.getElementById('platno-1'); 
+        const platno1 = plat1.getContext('2d');
+
+        platno1.fillStyle = "#0000FF"; // nastavimo barvo polnila
+        platno1.fillRect(0, 0, 200, 100); // narišemo moder kvadratek na platnu
+    </script>
+
+
+</body>
+</html>
